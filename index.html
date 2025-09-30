@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação de Trabalho</title>
+    <style>
+        /* Reset e configurações básicas */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Cabeçalho */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        /* Conteúdo principal */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .intro h2 {
+            color: #2575fc;
+            margin-bottom: 1rem;
+        }
+        
+        /* Slides */
+        .slides-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .slides-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .slides-header h2 {
+            color: #2575fc;
+        }
+        
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .slide-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .slide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slide-thumbnail {
+            height: 180px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1.5rem;
+        }
+        
+        .slide-info {
+            padding: 1rem;
+        }
+        
+        .slide-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .slide-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        /* Modal para visualização de slides */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 1rem;
+            background-color: #2575fc;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .modal-body img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-btn {
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #1a68e8;
+        }
+        
+        .nav-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        /* Rodapé */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .slides-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header-content">
+            <h1>Apresentação de Trabalho</h1>
+            <p class="subtitle">Compartilhando conhecimento com a turma</p>
+        </div>
+    </header>
+    
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <section class="intro">
+            <h2>Sobre esta apresentação</h2>
+            <p>Bem-vindos à minha apresentação de trabalho! Aqui vocês encontrarão todos os slides que utilizarei durante a exposição. Fiquem à vontade para navegar pelos materiais e utilizá-los como referência.</p>
+            <p>Para visualizar um slide em tamanho maior, basta clicar sobre ele.</p>
+        </section>
+        
+        <section class="slides-container">
+            <div class="slides-header">
+                <h2>Slides da Apresentação</h2>
+                <span id="slide-count">Total: 5 slides</span>
+            </div>
+            
+            <div class="slides-grid" id="slides-grid">
+                <!-- Os slides serão inseridos aqui via JavaScript -->
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modal para visualização de slides -->
+    <div class="modal" id="slide-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Slide 1</h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="Slide">
+            </div>
+            <div class="modal-nav">
+                <button class="nav-btn" id="prev-slide">Anterior</button>
+                <span id="slide-counter">1 de 5</span>
+                <button class="nav-btn" id="next-slide">Próximo</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2023 - Apresentação de Trabalho</p>
+            <p>Desenvolvido para compartilhar conhecimento com a turma</p>
+        </div>
+    </footer>
+    
+    <script>
+       <iframe src="https://gamma.app/embed/pkt1pi885l82yct" style="width: 700px; max-width: 100%; height: 450px" allow="fullscreen" title="Equipamentos Ativos de Rede"></iframe>
+            {
+                id: 1,
+                title: "Introdução",
+                description: "Apresentação do tema e objetivos",
+                image: "https://via.placeholder.com/800x600/2575fc/ffffff?text=Slide+1"
+            },
+            {
+                id: 2,
+                title: "Contextualização",
+                description: "Panorama geral do assunto abordado",
+                image: "https://via.placeholder.com/800x600/6a11cb/ffffff?text=Slide+2"
+            },
+            {
+                id: 3,
+                title: "Metodologia",
+                description: "Abordagem utilizada na pesquisa",
+                image: "https://via.placeholder.com/800x600/ff6b6b/ffffff?text=Slide+3"
+            },
+            {
+                id: 4,
+                title: "Resultados",
+                description: "Principais descobertas e análises",
+                image: "https://via.placeholder.com/800x600/4ecdc4/ffffff?text=Slide+4"
+            },
+            {
+                id: 5,
+                title: "Conclusão",
+                description: "Síntese e considerações finais",
+                image: "https://via.placeholder.com/800x600/45b7d1/ffffff?text=Slide+5"
+            }
+        ];
+        
+        // Elementos do DOM
+        const slidesGrid = document.getElementById('slides-grid');
+        const slideCount = document.getElementById('slide-count');
+        const slideModal = document.getElementById('slide-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImage = document.getElementById('modal-image');
+        const closeModal = document.getElementById('close-modal');
+        const prevSlideBtn = document.getElementById('prev-slide');
+        const nextSlideBtn = document.getElementById('next-slide');
+        const slideCounter = document.getElementById('slide-counter');
+        
+        let currentSlideIndex = 0;
+        
+        // Função para renderizar os slides na grade
+        function renderSlides() {
+            slidesGrid.innerHTML = '';
+            slideCount.textContent = Total: ${slides.length} slides;
+            
+            slides.forEach((slide, index) => {
+                const slideCard = document.createElement('div');
+                slideCard.className = 'slide-card';
+                slideCard.innerHTML = `
+                    <div class="slide-thumbnail">
+                        <span>Slide ${slide.id}</span>
+                    </div>
+                    <div class="slide-info">
+                        <h3 class="slide-title">${slide.title}</h3>
+                        <p class="slide-description">${slide.description}</p>
+                    </div>
+                `;
+                
+                slideCard.addEventListener('click', () => openSlideModal(index));
+                slidesGrid.appendChild(slideCard);
+            });
+        }
+        
+        // Função para abrir o modal com o slide selecionado
+        function openSlideModal(index) {
+            currentSlideIndex = index;
+            updateModalContent();
+            slideModal.style.display = 'flex';
+        }
+        
+        // Função para atualizar o conteúdo do modal
+        function updateModalContent() {
+            const slide = slides[currentSlideIndex];
+            modalTitle.textContent = slide.title;
+            modalImage.src = slide.image;
+            modalImage.alt = slide.title;
+            slideCounter.textContent = ${currentSlideIndex + 1} de ${slides.length};
+            
+            // Atualizar estado dos botões de navegação
+            prevSlideBtn.disabled = currentSlideIndex === 0;
+            nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
+        }
+        
+        // Event listeners
+        closeModal.addEventListener('click', () => {
+            slideModal.style.display = 'none';
+        });
+        
+        prevSlideBtn.addEventListener('click', () => {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateModalContent();
+            }
+        });
+        
+        nextSlideBtn.addEventListener('click', () => {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                updateModalContent();
+            }
+        });
+        
+        // Fechar modal ao clicar fora do conteúdo
+        window.addEventListener('click', (event) => {
+            if (event.target === slideModal) {
+                slideModal.style.display = 'none';
+            }
+        });
+        
+        // Inicializar a página
+        renderSlides();
+    </script>
+</body>
+</html>
